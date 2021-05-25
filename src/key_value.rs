@@ -1,21 +1,28 @@
 use std::fmt;
 
 #[derive(Debug)]
-pub struct KeyValue {
+pub struct KeyValue<T> {
     key: String,
-    value: String,
+    value: T,
 }
 
-impl KeyValue {
-    pub fn new(key: &str, value: &str) -> KeyValue {
+impl<T> KeyValue<T> {
+    pub fn from_str(key: &str, value: T) -> KeyValue<T> {
         KeyValue {
             key: String::from(key),
-            value: String::from(value)
+            value,
         }
+    }
+
+    pub fn from_string(key: String, value: T) -> KeyValue<T> {
+        KeyValue { key, value }
     }
 }
 
-impl fmt::Display for KeyValue {
+impl<T> fmt::Display for KeyValue<T>
+where
+    T: fmt::Display,
+{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} = {}", self.key, self.value)
     }

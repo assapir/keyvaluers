@@ -1,8 +1,6 @@
-mod key_value;
-
-use key_value::KeyValue;
+use keyvaluers::key_value::KeyValue;
 
 fn main() {
-    let kv = KeyValue::new("assaf", "sapir");
+    let kv = KeyValue::from_str("assaf", 2);
     println!("{}", kv);
 }
