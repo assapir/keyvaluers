@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct KeyValue<T> {
     key: String,
     value: T,
@@ -22,16 +22,6 @@ impl<T> KeyValue<T> {
 impl<T: fmt::Display> fmt::Display for KeyValue<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} = {}", self.key, self.value)
-    }
-}
-
-impl<T: PartialEq> PartialEq for KeyValue<T> {
-    fn eq(&self, other: &KeyValue<T>) -> bool {
-        self.key == other.key && self.value == other.value
-    }
-
-    fn ne(&self, other: &KeyValue<T>) -> bool {
-        !self.eq(other)
     }
 }
 
