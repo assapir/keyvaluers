@@ -1,3 +1,8 @@
+mod key_value;
+
+use key_value::KeyValue;
+
 fn main() {
-    println!("Hello, world!");
+    let kv = KeyValue::new("assaf", "sapir");
+    println!("{}", kv);
 }
