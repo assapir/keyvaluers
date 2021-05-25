@@ -19,11 +19,51 @@ impl<T> KeyValue<T> {
     }
 }
 
-impl<T> fmt::Display for KeyValue<T>
-where
-    T: fmt::Display,
-{
+impl<T: fmt::Display> fmt::Display for KeyValue<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{} = {}", self.key, self.value)
+    }
+}
+
+impl<T: PartialEq> PartialEq for KeyValue<T> {
+    fn eq(&self, other: &KeyValue<T>) -> bool {
+        self.key == other.key && self.value == other.value
+    }
+
+    fn ne(&self, other: &KeyValue<T>) -> bool {
+        !self.eq(other)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn from_str() {
+        let kv = KeyValue::from_str("key", "value");
+        assert_eq!(kv.key, String::from("key"));
+        assert_eq!(kv.value, String::from("value"));
+        assert_ne!(kv.key, String::from("value"));
+    }
+
+    #[test]
+    fn from_string() {
+        let kv = KeyValue::from_string(String::from("key"), 2);
+        assert_eq!(kv.key, String::from("key"));
+        assert_eq!(kv.value, 2);
+    }
+
+    #[test]
+    fn partial_eq_eq() {
+        let kv1 = KeyValue::from_str("key", 1);
+        let kv2 = KeyValue::from_string(String::from("key"),1);
+        assert_eq!(kv1, kv2)
+    }
+    #[test]
+    fn partial_eq_ne() {
+        let kv1 = KeyValue::from_str("key", 2);
+        let kv2 = KeyValue::from_string(String::from("key"),1);
+        assert_ne!(kv1, kv2)
     }
 }
