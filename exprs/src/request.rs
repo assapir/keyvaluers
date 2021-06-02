@@ -137,4 +137,22 @@ Content-Type: application/x-www-form-urlencoded
         assert_eq!(content.headers.get("user-agent").unwrap(), r#"curl/7.64.1"#);
         assert_eq!(content.body.unwrap(), body);
     }
+
+    #[test]
+    fn test_parse_without_body() {
+        let request_str = r#"PUT / HTTP/1.1
+Host: localhost:7878
+User-Agent: curl/7.64.1
+Accept: */*
+Content-Length: 2
+Content-Type: application/x-www-form-urlencoded"#;
+
+        let content = RequestContent::parse(&request_str).unwrap();
+        assert_eq!("PUT", content.method);
+        assert_eq!("/", content.uri);
+        assert_eq!(content.headers.len(), 5);
+        assert_eq!(content.headers.get("host").unwrap(), r#"localhost:7878"#);
+        assert_eq!(content.headers.get("user-agent").unwrap(), r#"curl/7.64.1"#);
+        assert_eq!(content.body, None);
+    }
 }
