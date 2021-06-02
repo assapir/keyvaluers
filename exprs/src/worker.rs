@@ -3,6 +3,7 @@ use std::thread::{self, JoinHandle};
 
 use crate::thread_pool::Message;
 
+#[derive(Debug)]
 pub struct Worker {
     pub id: usize,
     pub thread: Option<JoinHandle<()>>,

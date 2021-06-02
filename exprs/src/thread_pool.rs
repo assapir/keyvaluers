@@ -9,6 +9,7 @@ pub enum Message {
 
 pub(crate) type Job = Box<dyn FnOnce() + Send + 'static>;
 
+#[derive(Debug)]
 pub struct ThreadPool {
     workers: Vec<Worker>,
     sender: mpsc::Sender<Message>,
@@ -17,7 +18,8 @@ pub struct ThreadPool {
 impl ThreadPool {
     /// Create a new thread pool.
     ///
-    /// The amount of threads in the pool.
+    /// # Arguments
+    /// * `size` - The amount of threads in the pool.
     ///
     /// # Panics
     ///

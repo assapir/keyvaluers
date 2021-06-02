@@ -47,13 +47,13 @@ mod tests {
     #[test]
     fn partial_eq_eq() {
         let kv1 = KeyValue::from_str("key", 1);
-        let kv2 = KeyValue::from_string(String::from("key"),1);
+        let kv2 = KeyValue::from_string(String::from("key"), 1);
         assert_eq!(kv1, kv2)
     }
     #[test]
     fn partial_eq_ne() {
         let kv1 = KeyValue::from_str("key", 2);
-        let kv2 = KeyValue::from_string(String::from("key"),1);
+        let kv2 = KeyValue::from_string(String::from("key"), 1);
         assert_ne!(kv1, kv2)
     }
 }

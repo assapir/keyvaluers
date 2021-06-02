@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 json = "0.12.4"
+num_cpus = "1.13.0"

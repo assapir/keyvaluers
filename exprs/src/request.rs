@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::io::{self, Read, Write};
 use std::net::TcpStream;
 
-use crate::errors::ParseError;
+use crate::ParseError;
 
 pub struct Request {
     pub content: RequestContent,
@@ -95,7 +95,10 @@ fn parse_header(line: &str) -> Result<(String, String), ParseError> {
         Some(parts) => parts,
         None => return Err(ParseError::new("Unable to parse header")),
     };
-    Ok((String::from(key.to_lowercase().trim()), String::from(value.trim())))
+    Ok((
+        String::from(key.to_lowercase().trim()),
+        String::from(value.trim()),
+    ))
 }
 
 #[cfg(test)]
@@ -116,7 +119,7 @@ Content-Type: application/x-www-form-urlencoded
 }"#;
 
         let content = RequestContent::parse(&request_str).unwrap();
-        let body = json::object!{
+        let body = json::object! {
             name: "foo",
         };
         assert_eq!("PUT", content.method);
