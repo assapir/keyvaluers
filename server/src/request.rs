@@ -102,13 +102,11 @@ fn parse_first_line(first_line: &str) -> Result<(String, String), ParseError> {
 }
 
 fn parse_header(line: &str) -> Result<(String, String), ParseError> {
-    let mut parts = line.split(':');
-    let key = match parts.next() {
-        Some(key) => String::from(key.trim().to_lowercase()),
+    let (key, value) = match line.split_once(':') {
+        Some(parts) => parts,
         None => return Err(ParseError::new("Unable to parse header")),
     };
-    let value = String::from(parts.as_str().trim());
-    Ok((key, value))
+    Ok((String::from(key.to_lowercase().trim()), String::from(value.trim())))
 }
 
 #[cfg(test)]
