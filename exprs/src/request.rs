@@ -3,18 +3,7 @@ use std::collections::HashMap;
 use std::io::{self, Read, Write};
 use std::net::TcpStream;
 
-#[derive(Debug)]
-pub struct ParseError {
-    pub message: String,
-}
-
-impl ParseError {
-    fn new(message: &str) -> Self {
-        Self {
-            message: String::from(message),
-        }
-    }
-}
+use crate::errors::ParseError;
 
 pub struct Request {
     pub content: RequestContent,
