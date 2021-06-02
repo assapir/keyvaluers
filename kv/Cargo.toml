@@ -1,0 +1,7 @@
+[package]
+name = "keyvaluers"
+version = "0.1.0"
+authors = ["Assaf Sapir <me@ass.af>"]
+edition = "2018"
+
+[dependencies]
