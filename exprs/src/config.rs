@@ -22,17 +22,27 @@ impl Config {
     /// let config = Config::new(None, None);
     /// ```
     pub fn new(port: Option<u32>, threads: Option<usize>) -> Self {
-        let port = match port {
-            None => 7878,
-            Some(p) => p,
-        };
+        let port = port.unwrap_or_else(|| 7878);
 
-        let threads = match threads {
-            None => num_cpus::get(),
-            Some(t) => t,
-        };
+        let threads = threads.unwrap_or(num_cpus::get());
 
         Self { port, threads }
+    }
+}
+
+impl Default for Config {
+    /// Construct with default values
+    ///
+    /// # Examples
+    /// ```rust
+    /// use exprs::Config;
+    /// let config = Config::default();
+    /// ```
+    fn default() -> Self {
+        Self {
+            port: 7878,
+            threads: num_cpus::get(),
+        }
     }
 }
 
@@ -41,9 +51,23 @@ mod test {
     use super::Config;
 
     #[test]
-    fn test_config_defaults() {
+    fn test_config_none() {
         let config = Config::new(None, None);
         assert_eq!(config.port, 7878);
         assert_eq!(config.threads, num_cpus::get());
+    }
+
+    #[test]
+    fn test_config_default() {
+        let config = Config::default();
+        assert_eq!(config.port, 7878);
+        assert_eq!(config.threads, num_cpus::get());
+    }
+
+    #[test]
+    fn test_config_some() {
+        let config = Config::new(Some(8080), Some(10));
+        assert_eq!(config.port, 8080);
+        assert_eq!(config.threads, 10);
     }
 }

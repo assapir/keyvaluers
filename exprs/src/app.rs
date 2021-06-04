@@ -1,19 +1,22 @@
-use crate::{Config, Request, Response, thread_pool::ThreadPool};
+use crate::{thread_pool::ThreadPool, Config, Request, Response};
 use std::net::TcpListener;
 
-#[derive(Debug)]
+type Handler = fn(req: &Request, res: &Response) -> ();
+
 pub struct App {
     pool: ThreadPool,
     listener: TcpListener,
+    handlers: Vec<Handler>,
 }
 
 impl App {
     pub fn new(config: Config) -> Self {
         let addr = format!("127.0.0.1:{}", config.port);
-        let listener = TcpListener::bind(&addr).expect(format!("Unable to bind to {}", addr).as_str());
+        let listener =
+            TcpListener::bind(&addr).expect(format!("Unable to bind to {}", addr).as_str());
         let pool = ThreadPool::new(config.threads);
 
-        Self { pool, listener }
+        Self { pool, listener, handlers: vec![] }
     }
 
     pub fn start(&self) {
@@ -33,6 +36,9 @@ impl App {
 
     fn handle_connection(request: &mut Request) {
         let mut response = Response::new(request);
-        response.send("Hello, world!")
+        match response.send("Hello, world!") {
+            Ok(it) => it,
+            Err(err) => panic!("Unable to send response: {}", err.message),
+        }
     }
 }

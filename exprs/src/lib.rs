@@ -2,7 +2,7 @@ mod config;
 pub use crate::config::Config;
 
 mod errors;
-pub use crate::errors::ParseError;
+pub use crate::errors::{ParseError, ReSendError};
 
 mod request;
 pub use crate::request::Request;

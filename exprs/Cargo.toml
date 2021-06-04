@@ -3,6 +3,8 @@ name = "exprs"
 version = "0.1.0"
 authors = ["Assaf Sapir <assapir@github.com>"]
 edition = "2018"
+license = "MIT"
+repository = "https://github.com/assapir/keyvaluers/tree/main/exprs"
 
 [dependencies]
 json = "0.12.4"

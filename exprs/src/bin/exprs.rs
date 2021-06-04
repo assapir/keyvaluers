@@ -1,8 +1,6 @@
-
-use exprs::{App, Config};
+use exprs::{App};
 
 fn main() {
-    let config = Config::new(None, None);
-    let app = App::new(config);
+    let app = App::new(Default::default());
     app.start();
 }

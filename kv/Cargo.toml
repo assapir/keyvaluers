@@ -1,7 +1,9 @@
 [package]
 name = "keyvaluers"
 version = "0.1.0"
-authors = ["Assaf Sapir <me@ass.af>"]
+authors = ["Assaf Sapir <assapir@github.com>"]
 edition = "2018"
+license = "MIT"
+repository = "https://github.com/assapir/keyvaluers/tree/main/kv"
 
 [dependencies]

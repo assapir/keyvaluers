@@ -10,3 +10,16 @@ impl ParseError {
         }
     }
 }
+
+#[derive(Debug)]
+pub struct ReSendError {
+    pub message: &'static str,
+}
+
+impl ReSendError {
+    pub(crate) fn new() -> Self {
+        Self {
+            message: "It's impossible to send again response that was already sent.",
+        }
+    }
+}
